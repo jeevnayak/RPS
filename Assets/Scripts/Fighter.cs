@@ -4,23 +4,23 @@ using System.Collections;
 
 public class Fighter : MonoBehaviour {
 
-	private enum WeaponState {Empty, Rock, Paper, Scissors};
+	public int hp;
 
-	private WeaponState weaponState;
+	private Weapon? loadedWeapon;
 
 	void Start () {
-		weaponState = WeaponState.Empty;
+		loadedWeapon = null;
+	}
+
+	public Weapon? GetLoadedWeapon () {
+		return loadedWeapon;
 	}
 	
 	public Move ExecuteMove (Move move) {
-		if (move.Equals(Move.Rock)) {
-			weaponState = WeaponState.Rock;
-		} else if (move.Equals(Move.Paper)) {
-			weaponState = WeaponState.Paper;
-		} else if (move.Equals(Move.Scissors)) {
-			weaponState = WeaponState.Scissors;
-		} else if (move.Equals (Move.Shoot)) {
-			weaponState = WeaponState.Empty;
+		if (move.type.Equals(Move.MoveType.Load)) {
+			loadedWeapon = move.weapon;
+		} else if (move.type.Equals(Move.MoveType.Shoot)) {
+			loadedWeapon = null;
 		}
 		return move;
 	}
@@ -29,16 +29,29 @@ public class Fighter : MonoBehaviour {
 		return ExecuteMove (GenerateRandomValidMove ());
 	}
 
+	public void TakeHit () {
+		hp--;
+	}
+
 	Move GenerateRandomValidMove () {
 		Move move = GetRandomMove();
-		while (move.Equals(Move.Shoot) && weaponState.Equals(WeaponState.Empty)) {
+		while (move.type.Equals(Move.MoveType.Shoot) && loadedWeapon == null) {
 			move = GetRandomMove();
+		}
+		if (move.type.Equals (Move.MoveType.Shoot)) {
+			move.weapon = loadedWeapon;
 		}
 		return move;
 	}
 	
 	Move GetRandomMove () {
-		Array moves = Enum.GetValues(typeof(Move));
-		return (Move)moves.GetValue(UnityEngine.Random.Range(0, moves.Length));
+		Array moveTypes = Enum.GetValues(typeof(Move.MoveType));
+		Move.MoveType moveType = (Move.MoveType)moveTypes.GetValue(UnityEngine.Random.Range(0, moveTypes.Length));
+		Weapon? weapon = null;
+		if (moveType.Equals(Move.MoveType.Load)) {
+			Array weapons = Enum.GetValues(typeof(Weapon));
+			weapon = (Weapon)weapons.GetValue(UnityEngine.Random.Range(0, weapons.Length));
+		}
+		return new Move(moveType, weapon);
 	}
 }
