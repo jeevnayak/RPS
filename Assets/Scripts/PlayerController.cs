@@ -12,6 +12,7 @@ public class PlayerController : NetworkBehaviour {
 	private GameController gameController;
 	private Text consoleText;
 	private bool loaded;
+	private bool automated;
 
 	[SyncVar(hook="OnWaitingForOthersChanged")]
 	private bool waitingForOthers;
@@ -22,6 +23,7 @@ public class PlayerController : NetworkBehaviour {
 		gameController = GameObject.FindWithTag("GameController").GetComponent<GameController>();
 		consoleText = GameObject.Find("Console Text").GetComponent<Text>();
 		loaded = false;
+		automated = false;
 
 		queuedMoves.Callback += OnQueuedMovesChanged;
 
@@ -37,7 +39,7 @@ public class PlayerController : NetworkBehaviour {
 			return;
 		}
 
-		if (queuedMoves.Count == gameController.GetQueueSize()) {
+		if (IsQueueFull()) {
 			return;
 		}
 
@@ -48,6 +50,15 @@ public class PlayerController : NetworkBehaviour {
 		} else if (Input.GetKeyDown(KeyCode.D)) {
 			CmdAddQueuedMove(Move.Sidestep);
 		}
+	}
+
+	public bool IsAutomated () {
+		return automated;
+	}
+
+	public void MakeAutomated () {
+		automated = true;
+		AutomatedFillQueue();
 	}
 
 	public bool GetWaitingForOthers () {
@@ -102,5 +113,22 @@ public class PlayerController : NetworkBehaviour {
 
 	public void TakeHit () {
 		hp--;
+	}
+
+	public void AutomatedStartNextMove () {
+		queuedMoves.Clear();
+		AutomatedFillQueue();
+	}
+
+	void AutomatedFillQueue () {
+		while (!IsQueueFull()) {
+			queuedMoves.Add((int)GenerateRandomMove());
+		}
+		gameController.OnQueuedMovesChanged();
+	}
+
+	Move GenerateRandomMove () {
+		Array moves = Enum.GetValues(typeof(Move));
+		return (Move)moves.GetValue(UnityEngine.Random.Range(0, moves.Length));
 	}
 }
