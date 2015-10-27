@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,18 +13,29 @@ public class GameController : MonoBehaviour {
 	public int initQueueSize;
 	public int steadyStateQueueSize;
 	public GameObject spaceship;
+	public GameObject player;
 
 	private PlayerController localPlayer = null;
 	private GameObject localPlayerShip = null;
 	private PlayerController remotePlayer = null;
 	private GameObject remotePlayerShip = null;
 	private int queueSize;
+	private bool singlePlayer;
 
 	void Start () {
 		queueSize = initQueueSize;
+		singlePlayer = false;
 
 		consoleText.text = "";
 		hpText.text = "";
+	}
+
+	void Update () {
+		if (Input.GetKeyDown(KeyCode.P) && remotePlayer == null) {
+			singlePlayer = true;
+			GameObject.Find("Network Manager").GetComponent<NetworkManager>().StartHost();
+			Instantiate(player, new Vector3 (0, 0, 0), Quaternion.identity);
+		}
 	}
 
 	public int GetQueueSize () {
@@ -40,6 +52,9 @@ public class GameController : MonoBehaviour {
 	
 	public void SetRemotePlayer (PlayerController player) {
 		remotePlayer = player;
+		if (singlePlayer) {
+			remotePlayer.MakeAutomated();
+		}
 
 		if (remotePlayerShip == null) {
 			Vector3 spawnPosition = new Vector3 (0, 1, 3);
@@ -52,9 +67,13 @@ public class GameController : MonoBehaviour {
 			return;
 		}
 
-		if (localPlayer.GetWaitingForOthers() && remotePlayer.GetWaitingForOthers()) {
-			localPlayer.CmdStartNextMove();
+		if (localPlayer.GetWaitingForOthers() &&
+		    (remotePlayer.GetWaitingForOthers() || remotePlayer.IsAutomated())) {
 			queueSize = steadyStateQueueSize;
+			localPlayer.CmdStartNextMove();
+			if (remotePlayer.IsAutomated()) {
+				remotePlayer.AutomatedStartNextMove();
+			}
 		}
 	}
 
