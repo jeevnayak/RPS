@@ -109,6 +109,16 @@ public class PlayerController : NetworkBehaviour {
 			}
 			loaded = false;
 		}
+
+		animateMove (myMove);
+	}
+
+	public void animateMove(Move myMove) {
+		GameObject morningStar;
+		if (myMove.Equals (Move.Sidestep)) {
+			morningStar = gameObject.transform.Find("MorningStar").gameObject;
+			morningStar.GetComponent<Animator>().SetTrigger("rollTrigger");
+		}
 	}
 
 	public void TakeHit () {
