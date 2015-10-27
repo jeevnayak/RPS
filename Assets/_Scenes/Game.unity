@@ -948,7 +948,7 @@ MonoBehaviour:
   consoleText: {fileID: 1966878110}
   hpText: {fileID: 1392065283}
   initQueueSize: 1
-  steadyStateQueueSize: 2
+  steadyStateQueueSize: 1
   spaceship: {fileID: 166048, guid: 692e18453d96949d9bbfb829633ba293, type: 2}
   player: {fileID: 173776, guid: 5e34f5235212a4e9590a8710ca9c33f6, type: 2}
 --- !u!4 &1876140227
