@@ -33,6 +33,8 @@ public class InfiniteStarfield : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		transform.Translate (Vector3.forward * Time.deltaTime);
+
 		if ( points == null ) CreateStars();
 		
 		for (int i = 0; i < starsMax; i++) {
