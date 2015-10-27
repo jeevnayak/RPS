@@ -611,7 +611,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   consoleText: {fileID: 967725914}
   hpText: {fileID: 1786545683}
-  queueSize: 1
+  initQueueSize: 1
+  steadyStateQueueSize: 2
 --- !u!4 &1999105888
 Transform:
   m_ObjectHideFlags: 0
