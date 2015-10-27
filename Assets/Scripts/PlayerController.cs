@@ -24,6 +24,12 @@ public class PlayerController : NetworkBehaviour {
 		loaded = false;
 
 		queuedMoves.Callback += OnQueuedMovesChanged;
+
+		if (isLocalPlayer) {
+			gameController.SetLocalPlayer(this);
+		} else {
+			gameController.SetRemotePlayer(this);
+		}
 	}
 
 	void Update () {

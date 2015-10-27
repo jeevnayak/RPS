@@ -12,6 +12,8 @@ public class GameController : MonoBehaviour {
 	public int initQueueSize;
 	public int steadyStateQueueSize;
 
+	private PlayerController localPlayer = null;
+	private PlayerController remotePlayer = null;
 	private int queueSize;
 
 	void Start () {
@@ -25,70 +27,48 @@ public class GameController : MonoBehaviour {
 		return queueSize;
 	}
 
+	public void SetLocalPlayer (PlayerController player) {
+		localPlayer = player;
+	}
+	
+	public void SetRemotePlayer (PlayerController player) {
+		remotePlayer = player;
+	}
+
 	public void OnWaitingForOthersChanged () {
-		PlayerController localPlayerController = null;
-		PlayerController remotePlayerController = null;
-		
-		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-		foreach (GameObject player in players) {
-			PlayerController playerController = player.GetComponent<PlayerController>();
-			if (playerController.isLocalPlayer) {
-				localPlayerController = playerController;
-			} else {
-				remotePlayerController = playerController;
-			}
-		}
-		
-		if (localPlayerController == null || remotePlayerController == null) {
+		if (localPlayer == null || remotePlayer == null) {
 			return;
 		}
 
-		if (localPlayerController.GetWaitingForOthers() &&
-		    remotePlayerController.GetWaitingForOthers()) {
-			localPlayerController.CmdStartNextMove();
+		if (localPlayer.GetWaitingForOthers() && remotePlayer.GetWaitingForOthers()) {
+			localPlayer.CmdStartNextMove();
 			queueSize = steadyStateQueueSize;
 		}
 	}
 
 	public void OnQueuedMovesChanged () {
-		PlayerController localPlayerController = null;
-		PlayerController remotePlayerController = null;
-
-		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-		foreach (GameObject player in players) {
-			PlayerController playerController = player.GetComponent<PlayerController>();
-			if (playerController.isLocalPlayer) {
-				localPlayerController = playerController;
-			} else {
-				remotePlayerController = playerController;
-			}
-		}
-
-		if (localPlayerController == null || remotePlayerController == null) {
+		if (localPlayer == null || remotePlayer == null) {
 			return;
 		}
 
-		if (!localPlayerController.IsQueueFull() || !remotePlayerController.IsQueueFull()) {
+		if (!localPlayer.IsQueueFull() || !remotePlayer.IsQueueFull()) {
 			return;
 		}
 
 		for (int i = 0; i < queueSize; i++) {
-			ResolveMove(localPlayerController, remotePlayerController, i);
+			ResolveMove(i);
 		}
 
-		localPlayerController.CmdWaitForOthers();
+		localPlayer.CmdWaitForOthers();
 	}
 
-	void ResolveMove (PlayerController localPlayerController,
-	                  PlayerController remotePlayerController,
-	                  int moveIndex) {
-		localPlayerController.ExecuteQueuedMove(moveIndex, remotePlayerController);
-		remotePlayerController.ExecuteQueuedMove(moveIndex, localPlayerController);
-		UpdateHpText (localPlayerController, remotePlayerController);
+	void ResolveMove (int moveIndex) {
+		localPlayer.ExecuteQueuedMove(moveIndex, remotePlayer);
+		remotePlayer.ExecuteQueuedMove(moveIndex, localPlayer);
+		UpdateHpText();
 	}
 
-	void UpdateHpText (PlayerController localPlayerController,
-	                   PlayerController remotePlayerController) {
-		hpText.text = "Your HP: " + localPlayerController.hp + "\nOpponent's HP: " + remotePlayerController.hp;
+	void UpdateHpText () {
+		hpText.text = "Your HP: " + localPlayer.hp + "\nOpponent's HP: " + remotePlayer.hp;
 	}
 }
