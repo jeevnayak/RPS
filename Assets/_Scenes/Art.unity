@@ -128,6 +128,10 @@ Prefab:
       propertyPath: m_Name
       value: PlanetRalu
       objectReference: {fileID: 0}
+    - target: {fileID: 12208616, guid: 87b167c2f57284ed8bff065381b4568a, type: 2}
+      propertyPath: m_Size
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 87b167c2f57284ed8bff065381b4568a, type: 2}
   m_IsPrefabParent: 0

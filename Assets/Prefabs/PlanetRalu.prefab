@@ -101,7 +101,7 @@ Halo:
   m_Color:
     serializedVersion: 2
     rgba: 4278190101
-  m_Size: 3
+  m_Size: 1
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -113,6 +113,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: f5c6e82dd8ec4441bb95f8246598fc4f, type: 2}
+    - target: {fileID: 0}
+      propertyPath: m_Size
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 173514}
