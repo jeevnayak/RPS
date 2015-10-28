@@ -10,6 +10,7 @@ public class GameController : MonoBehaviour {
 
 	public Button shootButton;
 	public Button sidestepButton;
+	public Button singlePlayerButton;
 	public Text consoleText;
 	public Text hpText;
 	public int initQueueSize;
@@ -29,12 +30,10 @@ public class GameController : MonoBehaviour {
 		hpText.text = "";
 	}
 
-	void Update () {
-		if (Input.GetKeyDown(KeyCode.P) && remotePlayer == null) {
-			singlePlayer = true;
-			GameObject.Find("Network Manager").GetComponent<NetworkManager>().StartHost();
-			Instantiate(player, new Vector3 (0, 0, 3), Quaternion.Euler(0, 180, 0));
-		}
+	public void StartSinglePlayer () {
+		singlePlayer = true;
+		GameObject.Find("Network Manager").GetComponent<NetworkManager>().StartHost();
+		Instantiate(player, new Vector3 (0, 0, 3), Quaternion.Euler(0, 180, 0));
 	}
 
 	public int GetQueueSize () {
@@ -50,6 +49,7 @@ public class GameController : MonoBehaviour {
 		if (singlePlayer) {
 			remotePlayer.MakeAutomated();
 		}
+		Destroy(singlePlayerButton.gameObject);
 	}
 
 	public void OnWaitingForOthersChanged () {

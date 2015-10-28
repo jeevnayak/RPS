@@ -14,7 +14,7 @@ public class PlayerController : NetworkBehaviour {
 	private Text consoleText;
 	public bool loaded;
 	private bool automated;
-	private bool canSidestep;
+	private bool automatedCanSidestep;
 
 	public GameObject chargerLeft;
 	public GameObject chargerRight;
@@ -37,7 +37,7 @@ public class PlayerController : NetworkBehaviour {
 		consoleText = GameObject.Find("Console Text").GetComponent<Text>();
 		loaded = false;
 		automated = false;
-		canSidestep = true;
+		automatedCanSidestep = true;
 
 		queuedMoves.Callback += OnQueuedMovesChanged;
 
@@ -89,12 +89,6 @@ public class PlayerController : NetworkBehaviour {
 			Vector3 pos = queuedMoveDisplay.transform.position;
 			pos.x += 80 * queuedMoves.Count;
 			queuedMoveDisplay.transform.position = pos;
-		}
-
-		if (move.Equals (Move.Sidestep)) {
-			canSidestep = false;
-		} else {
-			canSidestep = true;
 		}
 
 		CmdAddQueuedMove(move);
@@ -180,7 +174,15 @@ public class PlayerController : NetworkBehaviour {
 
 	void AutomatedFillQueue () {
 		while (!IsQueueFull()) {
-			queuedMoves.Add((int)GenerateRandomMove());
+			Move move = GenerateRandomMove();
+
+			queuedMoves.Add((int)move);
+
+			if (move.Equals (Move.Sidestep)) {
+				automatedCanSidestep = false;
+			} else {
+				automatedCanSidestep = true;
+			}
 		}
 		gameController.OnQueuedMovesChanged();
 	}
@@ -193,7 +195,7 @@ public class PlayerController : NetworkBehaviour {
 				continue;
 			}
 
-			if (move.Equals(Move.Sidestep) && !canSidestep) {
+			if (move.Equals(Move.Sidestep) && !automatedCanSidestep) {
 				continue;
 			}
 
