@@ -21,6 +21,11 @@ public class PlayerController : NetworkBehaviour {
 	private Animator msAnimator;
 	public GameObject explosion;
 
+	// audio sources
+	public AudioSource audioSidestep;
+	public AudioSource audioShoot;
+	public AudioSource audioLoad;
+
 	[SyncVar(hook="OnWaitingForOthersChanged")]
 	private bool waitingForOthers;
 
@@ -50,7 +55,7 @@ public class PlayerController : NetworkBehaviour {
 	public bool IsAutomated () {
 		return automated;
 	}
-
+	
 	public void MakeAutomated () {
 		automated = true;
 		AutomatedFillQueue();
@@ -137,13 +142,20 @@ public class PlayerController : NetworkBehaviour {
 
 		if (myMove.Equals (Move.Sidestep)) {
 			msAnimator.SetTrigger ("triggerRoll");
+			audioSidestep.Play();
 			
 		} else if (myMove.Equals (Move.Shoot)) {
 			msAnimator.SetTrigger ("triggerLasers");
+			audioShoot.Play();
 		}
 
 		chargerLeft.SetActive (loaded);
 		chargerRight.SetActive (loaded);
+		if (loaded) {
+			audioLoad.Play ();
+		} else {
+			audioLoad.Pause ();
+		}
 	}
 
 	public void TakeHit () {
