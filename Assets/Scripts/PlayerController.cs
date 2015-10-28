@@ -11,8 +11,11 @@ public class PlayerController : NetworkBehaviour {
 
 	private GameController gameController;
 	private Text consoleText;
-	private bool loaded;
+	public bool loaded;
 	private bool automated;
+
+	public GameObject chargerLeft;
+	public GameObject chargerRight;
 
 	[SyncVar(hook="OnWaitingForOthersChanged")]
 	private bool waitingForOthers;
@@ -32,6 +35,9 @@ public class PlayerController : NetworkBehaviour {
 		} else {
 			gameController.SetRemotePlayer(this);
 		}
+
+		chargerLeft.SetActive (loaded);
+		chargerRight.SetActive (loaded);
 	}
 
 	void Update () {
@@ -110,15 +116,19 @@ public class PlayerController : NetworkBehaviour {
 			loaded = false;
 		}
 
+		// animations
 		animateMove (myMove);
 	}
 
 	public void animateMove(Move myMove) {
 		GameObject morningStar;
 		if (myMove.Equals (Move.Sidestep)) {
-			morningStar = gameObject.transform.Find("MorningStar").gameObject;
-			morningStar.GetComponent<Animator>().SetTrigger("rollTrigger");
+			morningStar = gameObject.transform.Find ("MorningStar").gameObject;
+			morningStar.GetComponent<Animator> ().SetTrigger ("rollTrigger");
 		}
+
+		chargerLeft.SetActive (loaded);
+		chargerRight.SetActive (loaded);
 	}
 
 	public void TakeHit () {
