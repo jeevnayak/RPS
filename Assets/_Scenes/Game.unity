@@ -1452,7 +1452,7 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1714284318}
   m_OnClick:
     m_PersistentCalls:
@@ -1568,6 +1568,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af9b4f31afe9a4b23a6a87f076dc769f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shootButton: {fileID: 1714284317}
+  sidestepButton: {fileID: 1677661778}
   consoleText: {fileID: 1966878110}
   hpText: {fileID: 1392065283}
   initQueueSize: 1

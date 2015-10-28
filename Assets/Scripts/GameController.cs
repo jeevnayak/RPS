@@ -8,6 +8,8 @@ public enum Move {Load, Shoot, Sidestep};
 
 public class GameController : MonoBehaviour {
 
+	public Button shootButton;
+	public Button sidestepButton;
 	public Text consoleText;
 	public Text hpText;
 	public int initQueueSize;
@@ -84,18 +86,23 @@ public class GameController : MonoBehaviour {
 	public void QueueLoad () {
 		if (localPlayer != null && !localPlayer.IsQueueFull()) {
 			localPlayer.AddQueuedMove (Move.Load);
+			shootButton.interactable = true;
+			sidestepButton.interactable = true;
 		}
 	}
 	
 	public void QueueShoot () {
 		if (localPlayer != null && !localPlayer.IsQueueFull()) {
 			localPlayer.AddQueuedMove (Move.Shoot);
+			shootButton.interactable = false;
+			sidestepButton.interactable = true;
 		}
 	}
 	
 	public void QueueSidestep () {
 		if (localPlayer != null && !localPlayer.IsQueueFull()) {
 			localPlayer.AddQueuedMove (Move.Sidestep);
+			sidestepButton.interactable = false;
 		}
 	}
 
