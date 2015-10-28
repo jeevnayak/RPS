@@ -163,6 +163,12 @@ public class PlayerController : NetworkBehaviour {
 	public void TakeHit () {
 		hp--;
 
+		if (hp <= 0) {
+			explosion.GetComponent<ParticleSystem> ().loop = false;
+			msAnimator.SetTrigger ("triggerDeath");
+			Destroy(gameObject, 1.5f);
+		}
+
 		explosion.SetActive (true);
 		explosion.GetComponent<ParticleSystem> ().maxParticles = explosion.GetComponent<ParticleSystem> ().maxParticles * 5;
 	}
