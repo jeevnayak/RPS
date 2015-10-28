@@ -17,6 +17,8 @@ public class PlayerController : NetworkBehaviour {
 
 	public GameObject chargerLeft;
 	public GameObject chargerRight;
+	private GameObject morningStar;
+	private Animator msAnimator;
 
 	[SyncVar(hook="OnWaitingForOthersChanged")]
 	private bool waitingForOthers;
@@ -39,6 +41,9 @@ public class PlayerController : NetworkBehaviour {
 
 		chargerLeft.SetActive (loaded);
 		chargerRight.SetActive (loaded);
+
+		morningStar = gameObject.transform.Find ("MorningStar").gameObject;
+		msAnimator = morningStar.GetComponent<Animator> ();
 	}
 
 	void Update () {
@@ -146,10 +151,12 @@ public class PlayerController : NetworkBehaviour {
 	}
 
 	public void animateMove(Move myMove) {
-		GameObject morningStar;
+
 		if (myMove.Equals (Move.Sidestep)) {
-			morningStar = gameObject.transform.Find ("MorningStar").gameObject;
-			morningStar.GetComponent<Animator> ().SetTrigger ("rollTrigger");
+			msAnimator.SetTrigger ("triggerRoll");
+			
+		} else if (myMove.Equals (Move.Shoot)) {
+			msAnimator.SetTrigger ("triggerLasers");
 		}
 
 		chargerLeft.SetActive (loaded);
