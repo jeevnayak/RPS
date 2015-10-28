@@ -14,6 +14,7 @@ public class PlayerController : NetworkBehaviour {
 	private Text consoleText;
 	public bool loaded;
 	private bool automated;
+	private bool canSidestep;
 
 	public GameObject chargerLeft;
 	public GameObject chargerRight;
@@ -36,6 +37,7 @@ public class PlayerController : NetworkBehaviour {
 		consoleText = GameObject.Find("Console Text").GetComponent<Text>();
 		loaded = false;
 		automated = false;
+		canSidestep = true;
 
 		queuedMoves.Callback += OnQueuedMovesChanged;
 
@@ -87,6 +89,12 @@ public class PlayerController : NetworkBehaviour {
 			Vector3 pos = queuedMoveDisplay.transform.position;
 			pos.x += 80 * queuedMoves.Count;
 			queuedMoveDisplay.transform.position = pos;
+		}
+
+		if (move.Equals (Move.Sidestep)) {
+			canSidestep = false;
+		} else {
+			canSidestep = true;
 		}
 
 		CmdAddQueuedMove(move);
@@ -179,6 +187,30 @@ public class PlayerController : NetworkBehaviour {
 
 	Move GenerateRandomMove () {
 		Array moves = Enum.GetValues(typeof(Move));
-		return (Move)moves.GetValue(UnityEngine.Random.Range(0, moves.Length));
+		List<Move> availableMoves = new List<Move>();
+		foreach (Move move in moves) {
+			if (move.Equals(Move.Shoot) && !CanShoot()) {
+				continue;
+			}
+
+			if (move.Equals(Move.Sidestep) && !canSidestep) {
+				continue;
+			}
+
+			availableMoves.Add(move);
+		}
+		return (Move)availableMoves[UnityEngine.Random.Range(0, availableMoves.Count)];
+	}
+
+	bool CanShoot () {
+		bool canShoot = loaded;
+		foreach (Move move in queuedMoves) {
+			if (move.Equals(Move.Load)) {
+				canShoot = true;
+			} else if (move.Equals(Move.Shoot)) {
+				canShoot = false;
+			}
+		}
+		return canShoot;
 	}
 }
