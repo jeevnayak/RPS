@@ -19,6 +19,7 @@ public class PlayerController : NetworkBehaviour {
 	public GameObject chargerRight;
 	private GameObject morningStar;
 	private Animator msAnimator;
+	public GameObject explosion;
 
 	[SyncVar(hook="OnWaitingForOthersChanged")]
 	private bool waitingForOthers;
@@ -165,6 +166,9 @@ public class PlayerController : NetworkBehaviour {
 
 	public void TakeHit () {
 		hp--;
+
+		explosion.SetActive (true);
+		explosion.GetComponent<ParticleSystem> ().maxParticles = explosion.GetComponent<ParticleSystem> ().maxParticles * 5;
 	}
 
 	public void AutomatedStartNextMove () {
