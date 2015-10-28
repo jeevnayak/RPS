@@ -2315,6 +2315,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 5
+  queuedMoveText: {fileID: 11407672, guid: 3e6ae69f503e143399e93c3a4238b198, type: 2}
   loaded: 0
   chargerLeft: {fileID: 175308}
   chargerRight: {fileID: 166068}
@@ -4633,6 +4634,11 @@ Prefab:
       propertyPath: hp
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: queuedMoveText
+      value: 
+      objectReference: {fileID: 11407672, guid: 3e6ae69f503e143399e93c3a4238b198,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 173776}
