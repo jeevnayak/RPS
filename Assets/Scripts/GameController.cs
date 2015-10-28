@@ -58,7 +58,7 @@ public class GameController : MonoBehaviour {
 		if (localPlayer.GetWaitingForOthers() &&
 		    (remotePlayer.GetWaitingForOthers() || remotePlayer.IsAutomated())) {
 			queueSize = steadyStateQueueSize;
-			localPlayer.CmdStartNextMove();
+			localPlayer.StartNextMove();
 			if (remotePlayer.IsAutomated()) {
 				remotePlayer.AutomatedStartNextMove();
 			}

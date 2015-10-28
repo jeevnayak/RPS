@@ -8,6 +8,7 @@ using System.Collections.Generic;
 public class PlayerController : NetworkBehaviour {
 
 	public int hp;
+	public Text queuedMoveText;
 
 	private GameController gameController;
 	private Text consoleText;
@@ -50,11 +51,11 @@ public class PlayerController : NetworkBehaviour {
 		}
 
 		if (Input.GetKeyDown(KeyCode.A)) {
-			CmdAddQueuedMove(Move.Load);
+			AddQueuedMove(Move.Load);
 		} else if (Input.GetKeyDown(KeyCode.S)) {
-			CmdAddQueuedMove(Move.Shoot);
+			AddQueuedMove(Move.Shoot);
 		} else if (Input.GetKeyDown(KeyCode.D)) {
-			CmdAddQueuedMove(Move.Sidestep);
+			AddQueuedMove(Move.Sidestep);
 		}
 	}
 
@@ -85,13 +86,37 @@ public class PlayerController : NetworkBehaviour {
 		gameController.OnWaitingForOthersChanged();
 	}
 
+	void AddQueuedMove (Move move) {
+		if (isLocalPlayer) {
+			Text queuedMoveDisplay = Instantiate (queuedMoveText) as Text;
+			queuedMoveDisplay.text = move.ToString ();
+			queuedMoveDisplay.transform.SetParent (GameObject.Find ("Canvas").transform);
+			Vector3 pos = queuedMoveDisplay.transform.position;
+			pos.x += 80 * queuedMoves.Count;
+			queuedMoveDisplay.transform.position = pos;
+		}
+
+		CmdAddQueuedMove(move);
+	}
+
 	[Command]
 	void CmdAddQueuedMove (Move move) {
 		queuedMoves.Add((int)move);
 	}
 
+	public void StartNextMove () {
+		if (isLocalPlayer) {
+			GameObject[] displayedQueuedMoves = GameObject.FindGameObjectsWithTag("QueuedMoveText");
+			foreach (GameObject queuedMoveDisplay in displayedQueuedMoves) {
+				Destroy(queuedMoveDisplay);
+			}
+		}
+
+		CmdStartNextMove();
+	}
+
 	[Command]
-	public void CmdStartNextMove () {
+	void CmdStartNextMove () {
 		waitingForOthers = false;
 		queuedMoves.Clear();
 	}
