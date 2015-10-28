@@ -47,24 +47,6 @@ public class PlayerController : NetworkBehaviour {
 		msAnimator = morningStar.GetComponent<Animator> ();
 	}
 
-	void Update () {
-		if (!isLocalPlayer) {
-			return;
-		}
-
-		if (IsQueueFull()) {
-			return;
-		}
-
-		if (Input.GetKeyDown(KeyCode.A)) {
-			AddQueuedMove(Move.Load);
-		} else if (Input.GetKeyDown(KeyCode.S)) {
-			AddQueuedMove(Move.Shoot);
-		} else if (Input.GetKeyDown(KeyCode.D)) {
-			AddQueuedMove(Move.Sidestep);
-		}
-	}
-
 	public bool IsAutomated () {
 		return automated;
 	}
@@ -92,7 +74,7 @@ public class PlayerController : NetworkBehaviour {
 		gameController.OnWaitingForOthersChanged();
 	}
 
-	void AddQueuedMove (Move move) {
+	public void AddQueuedMove (Move move) {
 		if (isLocalPlayer) {
 			Text queuedMoveDisplay = Instantiate (queuedMoveText) as Text;
 			queuedMoveDisplay.text = move.ToString ();

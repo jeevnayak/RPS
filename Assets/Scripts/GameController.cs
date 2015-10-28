@@ -81,6 +81,24 @@ public class GameController : MonoBehaviour {
 		localPlayer.CmdWaitForOthers();
 	}
 
+	public void QueueLoad () {
+		if (localPlayer != null && !localPlayer.IsQueueFull()) {
+			localPlayer.AddQueuedMove (Move.Load);
+		}
+	}
+	
+	public void QueueShoot () {
+		if (localPlayer != null && !localPlayer.IsQueueFull()) {
+			localPlayer.AddQueuedMove (Move.Shoot);
+		}
+	}
+	
+	public void QueueSidestep () {
+		if (localPlayer != null && !localPlayer.IsQueueFull()) {
+			localPlayer.AddQueuedMove (Move.Sidestep);
+		}
+	}
+
 	void ResolveMove (int moveIndex) {
 		localPlayer.ExecuteQueuedMove(moveIndex, remotePlayer);
 		remotePlayer.ExecuteQueuedMove(moveIndex, localPlayer);
