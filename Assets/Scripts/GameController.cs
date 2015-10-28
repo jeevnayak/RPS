@@ -31,7 +31,7 @@ public class GameController : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.P) && remotePlayer == null) {
 			singlePlayer = true;
 			GameObject.Find("Network Manager").GetComponent<NetworkManager>().StartHost();
-			Instantiate(player, new Vector3 (0, 1, 3), Quaternion.Euler(0, 180, 0));
+			Instantiate(player, new Vector3 (0, 0, 3), Quaternion.Euler(0, 180, 0));
 		}
 	}
 

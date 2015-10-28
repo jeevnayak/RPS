@@ -70,6 +70,40 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &116412
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 497758}
+  - 15: {fileID: 1532044}
+  - 26: {fileID: 2659674}
+  m_Layer: 0
+  m_Name: LaserLeft
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &118162
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 415216}
+  - 15: {fileID: 1500198}
+  - 26: {fileID: 2622404}
+  m_Layer: 0
+  m_Name: LaserRight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &119956
 GameObject:
   m_ObjectHideFlags: 1
@@ -539,7 +573,8 @@ Transform:
   m_LocalRotation: {x: 1.15202326e-07, y: -.707106829, z: -.707106829, w: -1.15202326e-07}
   m_LocalPosition: {x: -.589999974, y: -.233333334, z: 1.66666663}
   m_LocalScale: {x: 11.1111078, y: 11.1111107, z: 11.1111107}
-  m_Children: []
+  m_Children:
+  - {fileID: 497758}
   m_Father: {fileID: 493078}
   m_RootOrder: 2
 --- !u!4 &401972
@@ -628,6 +663,18 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 487820}
+  m_RootOrder: 0
+--- !u!4 &415216
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 118162}
+  m_LocalRotation: {x: 0, y: 0, z: -.0130895972, w: .999914348}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: .299999952, y: .299999923, z: .299999923}
+  m_Children: []
+  m_Father: {fileID: 496370}
   m_RootOrder: 0
 --- !u!4 &418724
 Transform:
@@ -917,7 +964,8 @@ Transform:
   m_LocalRotation: {x: 1.15202326e-07, y: -.707106829, z: -.707106829, w: -1.15202326e-07}
   m_LocalPosition: {x: .589999974, y: -.233333334, z: 1.66666663}
   m_LocalScale: {x: 11.1111078, y: 11.1111107, z: 11.1111107}
-  m_Children: []
+  m_Children:
+  - {fileID: 415216}
   m_Father: {fileID: 493078}
   m_RootOrder: 1
 --- !u!4 &496626
@@ -932,6 +980,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 404814}
   m_RootOrder: 7
+--- !u!4 &497758
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 116412}
+  m_LocalRotation: {x: 0, y: 0, z: .0130895972, w: .999914348}
+  m_LocalPosition: {x: 0, y: -0, z: 0}
+  m_LocalScale: {x: .299999952, y: .299999923, z: .299999923}
+  m_Children: []
+  m_Father: {fileID: 401150}
+  m_RootOrder: 0
 --- !u!12 &1202272
 ParticleAnimator:
   m_ObjectHideFlags: 1
@@ -1112,6 +1172,33 @@ ParticleAnimator:
   damping: 1
   stopSimulation: 0
   autodestruct: 0
+--- !u!15 &1500198
+EllipsoidParticleEmitter:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 118162}
+  serializedVersion: 2
+  m_Enabled: 1
+  m_Emit: 1
+  minSize: .100000001
+  maxSize: .100000001
+  minEnergy: 3
+  maxEnergy: 3
+  minEmission: 50
+  maxEmission: 50
+  worldVelocity: {x: 0, y: 0, z: 0}
+  localVelocity: {x: 0, y: 200, z: 0}
+  rndVelocity: {x: 0, y: 0, z: 0}
+  emitterVelocityScale: .0500000007
+  tangentVelocity: {x: 0, y: 0, z: 0}
+  angularVelocity: 0
+  rndAngularVelocity: 0
+  rndRotation: 0
+  Simulate in Worldspace?: 1
+  m_OneShot: 0
+  m_Ellipsoid: {x: 0, y: 0, z: 0}
+  m_MinEmitterRange: 9.99999975e-05
 --- !u!15 &1501472
 EllipsoidParticleEmitter:
   m_ObjectHideFlags: 1
@@ -1139,6 +1226,33 @@ EllipsoidParticleEmitter:
   m_OneShot: 0
   m_Ellipsoid: {x: .0500000007, y: .0500000007, z: 0}
   m_MinEmitterRange: 0
+--- !u!15 &1532044
+EllipsoidParticleEmitter:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 116412}
+  serializedVersion: 2
+  m_Enabled: 1
+  m_Emit: 1
+  minSize: .100000001
+  maxSize: .100000001
+  minEnergy: 3
+  maxEnergy: 3
+  minEmission: 50
+  maxEmission: 50
+  worldVelocity: {x: 0, y: 0, z: 0}
+  localVelocity: {x: 0, y: 200, z: 0}
+  rndVelocity: {x: 0, y: 0, z: 0}
+  emitterVelocityScale: .0500000007
+  tangentVelocity: {x: 0, y: 0, z: 0}
+  angularVelocity: 0
+  rndAngularVelocity: 0
+  rndRotation: 0
+  Simulate in Worldspace?: 1
+  m_OneShot: 0
+  m_Ellipsoid: {x: 0, y: 0, z: 0}
+  m_MinEmitterRange: 9.99999975e-05
 --- !u!15 &1566184
 EllipsoidParticleEmitter:
   m_ObjectHideFlags: 1
@@ -1610,6 +1724,40 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
+--- !u!26 &2622404
+ParticleRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 118162}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 389c6db8ee22945e7a167e3907fd7ab5, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 1
+  m_ReflectionProbeUsage: 1
+  m_ProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_ImportantGI: 0
+  m_AutoUVMaxDistance: .5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  serializedVersion: 2
+  m_CameraVelocityScale: 0
+  m_StretchParticles: 3
+  m_LengthScale: 7
+  m_VelocityScale: 0
+  m_MaxParticleSize: .00999999978
+  UV Animation:
+    x Tile: 1
+    y Tile: 1
+    cycles: 1
 --- !u!26 &2636292
 ParticleRenderer:
   m_ObjectHideFlags: 1
@@ -1674,6 +1822,40 @@ ParticleRenderer:
   m_LengthScale: 2
   m_VelocityScale: 0
   m_MaxParticleSize: .100000001
+  UV Animation:
+    x Tile: 1
+    y Tile: 1
+    cycles: 1
+--- !u!26 &2659674
+ParticleRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 116412}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 389c6db8ee22945e7a167e3907fd7ab5, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 1
+  m_ReflectionProbeUsage: 1
+  m_ProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_ImportantGI: 0
+  m_AutoUVMaxDistance: .5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  serializedVersion: 2
+  m_CameraVelocityScale: 0
+  m_StretchParticles: 3
+  m_LengthScale: 7
+  m_VelocityScale: 0
+  m_MaxParticleSize: .00999999978
   UV Animation:
     x Tile: 1
     y Tile: 1
