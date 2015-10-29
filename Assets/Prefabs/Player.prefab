@@ -324,7 +324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf95aa520785c4563937cad1a354364e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 5
+  initHp: 1
   queuedMoveText: {fileID: 11407672, guid: 3e6ae69f503e143399e93c3a4238b198, type: 2}
   loaded: 0
   morningStarPrefab: {fileID: 109340, guid: 692e18453d96949d9bbfb829633ba293, type: 2}
@@ -443,7 +443,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: hp
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: queuedMoveText
@@ -458,6 +458,10 @@ Prefab:
       propertyPath: morningStarPrefab
       value: 
       objectReference: {fileID: 109340, guid: 692e18453d96949d9bbfb829633ba293, type: 2}
+    - target: {fileID: 0}
+      propertyPath: initHp
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 173776}

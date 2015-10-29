@@ -39,7 +39,7 @@ public class GameController : MonoBehaviour {
 	public void StartSinglePlayer () {
 		singlePlayer = true;
 		GameObject.Find("Network Manager").GetComponent<NetworkManager>().StartHost();
-		Instantiate(player, new Vector3 (0, 0, 3), Quaternion.Euler(0, 180, 0));
+		Instantiate(player, new Vector3 (0, 0, 0), Quaternion.identity);
 	}
 
 	public int GetQueueSize () {
@@ -48,6 +48,7 @@ public class GameController : MonoBehaviour {
 
 	public void SetLocalPlayer (PlayerController player) {
 		localPlayer = player;
+		UpdateHpText ();
 	}
 	
 	public void SetRemotePlayer (PlayerController player) {
@@ -56,6 +57,7 @@ public class GameController : MonoBehaviour {
 			remotePlayer.MakeAutomated();
 		}
 		Destroy(singlePlayerButton.gameObject);
+		UpdateHpText ();
 	}
 
 	public void OnWaitingForOthersChanged () {
@@ -119,16 +121,20 @@ public class GameController : MonoBehaviour {
 	}
 
 	void UpdateHpText () {
-		hpText.text = "Your HP: " + localPlayer.hp + "\nOpponent's HP: " + remotePlayer.hp;
+		if (localPlayer == null || remotePlayer == null) {
+			return;
+		}
+
+		hpText.text = "Your HP: " + localPlayer.GetHp() + "\nOpponent's HP: " + remotePlayer.GetHp();
 	}
 
 	public void GameOver () {
 		winloseLighting.SetActive(true);
-		if (localPlayer.hp <= 0) {
+		if (localPlayer.GetHp() <= 0) {
 			// lose
 			loseModel.SetActive(true);
 			winModel.SetActive(false);
-		} else if (remotePlayer.hp <= 0) {
+		} else if (remotePlayer.GetHp() <= 0) {
 			// win
 			loseModel.SetActive(false);
 			winModel.SetActive(true);

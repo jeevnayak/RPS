@@ -7,11 +7,12 @@ using System.Collections.Generic;
 
 public class PlayerController : NetworkBehaviour {
 
-	public int hp;
+	public int initHp;
 	public Text queuedMoveText;
 
 	private GameController gameController;
 	private Text consoleText;
+	private int hp;
 	public bool loaded;
 	private bool automated;
 	private bool automatedCanSidestep;
@@ -36,6 +37,7 @@ public class PlayerController : NetworkBehaviour {
 	void Start () {
 		gameController = GameObject.FindWithTag("GameController").GetComponent<GameController>();
 		consoleText = GameObject.Find("Console Text").GetComponent<Text>();
+		hp = initHp;
 		loaded = false;
 		automated = false;
 		automatedCanSidestep = true;
@@ -43,8 +45,12 @@ public class PlayerController : NetworkBehaviour {
 		queuedMoves.Callback += OnQueuedMovesChanged;
 
 		if (isLocalPlayer) {
+			consoleText.text += "local player " + this.GetInstanceID() + "\n";
 			gameController.SetLocalPlayer(this);
 		} else {
+			consoleText.text += "remote player " + this.GetInstanceID() + "\n";
+			transform.position = new Vector3(0, 0, 3);
+			transform.rotation = Quaternion.Euler(0, 180, 0);
 			gameController.SetRemotePlayer(this);
 		}
 
@@ -71,6 +77,10 @@ public class PlayerController : NetworkBehaviour {
 	public void MakeAutomated () {
 		automated = true;
 		AutomatedFillQueue();
+	}
+
+	public int GetHp () {
+		return hp;
 	}
 
 	public bool GetWaitingForOthers () {
@@ -131,7 +141,7 @@ public class PlayerController : NetworkBehaviour {
 	}
 
 	public void Reset () {
-		hp = 5;
+		hp = initHp;
 		loaded = false;
 		automatedCanSidestep = true;
 
