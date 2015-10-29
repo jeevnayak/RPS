@@ -48,6 +48,7 @@ public class GameController : MonoBehaviour {
 
 	public void SetLocalPlayer (PlayerController player) {
 		localPlayer = player;
+		InitButtons ();
 		UpdateHpText ();
 	}
 	
@@ -57,7 +58,23 @@ public class GameController : MonoBehaviour {
 			remotePlayer.MakeAutomated();
 		}
 		Destroy(singlePlayerButton.gameObject);
+		InitButtons ();
 		UpdateHpText ();
+	}
+
+	void InitButtons () {
+		if (localPlayer == null || remotePlayer == null) {
+			return;
+		}
+
+		loadButton.gameObject.SetActive(true);
+		shootButton.gameObject.SetActive(true);
+		shootButton.interactable = false;
+		sidestepButton.gameObject.SetActive(true);
+		sidestepButton.interactable = true;
+		loseModel.SetActive(false);
+		winModel.SetActive(false);
+		restartButton.gameObject.SetActive(false);
 	}
 
 	public void OnWaitingForOthersChanged () {
@@ -147,18 +164,12 @@ public class GameController : MonoBehaviour {
 	}
 
 	public void Restart () {
-		loadButton.gameObject.SetActive(true);
-		shootButton.gameObject.SetActive(true);
-		sidestepButton.gameObject.SetActive(true);
-		loseModel.SetActive(false);
-		winModel.SetActive(false);
-		restartButton.gameObject.SetActive(false);
-
 		localPlayer.Reset();
 		if (singlePlayer) {
 			remotePlayer.Reset ();
 		}
 
+		InitButtons ();
 		UpdateHpText ();
 	}
 }
