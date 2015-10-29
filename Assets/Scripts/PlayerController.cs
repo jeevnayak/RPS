@@ -134,7 +134,11 @@ public class PlayerController : NetworkBehaviour {
 		hp = 5;
 		loaded = false;
 		automatedCanSidestep = true;
+
 		queuedMoves.Clear ();
+		if (automated) {
+			AutomatedFillQueue();
+		}
 
 		if (morningStar.gameObject != null) {
 			Destroy (morningStar.gameObject);
