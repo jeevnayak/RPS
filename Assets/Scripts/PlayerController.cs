@@ -167,6 +167,7 @@ public class PlayerController : NetworkBehaviour {
 			explosion.GetComponent<ParticleSystem> ().loop = false;
 			msAnimator.SetTrigger ("triggerDeath");
 			Destroy(gameObject, 1.5f);
+			gameController.GameOver();
 		}
 
 		explosion.SetActive (true);

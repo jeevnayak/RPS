@@ -8,9 +8,11 @@ public enum Move {Load, Shoot, Sidestep};
 
 public class GameController : MonoBehaviour {
 
+	public Button loadButton;
 	public Button shootButton;
 	public Button sidestepButton;
 	public Button singlePlayerButton;
+	public Button restartButton;
 	public Text consoleText;
 	public Text hpText;
 	public int initQueueSize;
@@ -114,5 +116,22 @@ public class GameController : MonoBehaviour {
 
 	void UpdateHpText () {
 		hpText.text = "Your HP: " + localPlayer.hp + "\nOpponent's HP: " + remotePlayer.hp;
+	}
+
+	public void GameOver () {
+		if (localPlayer.hp <= 0) {
+			// lose
+		} else if (remotePlayer.hp <= 0) {
+			// win
+		}
+
+		loadButton.gameObject.SetActive(false);
+		shootButton.gameObject.SetActive(false);
+		sidestepButton.gameObject.SetActive(false);
+		restartButton.gameObject.SetActive(true);
+	}
+
+	public void Restart () {
+		Application.LoadLevel(Application.loadedLevel);
 	}
 }
