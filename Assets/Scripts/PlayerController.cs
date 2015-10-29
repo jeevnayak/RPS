@@ -112,6 +112,11 @@ public class PlayerController : NetworkBehaviour {
 	public void CmdWaitForRestart () {
 		waitingForRestart = true;
 	}
+
+	[Command]
+	public void CmdStopWaitingForRestart () {
+		waitingForRestart = false;
+	}
 	
 	void OnWaitingForRestartChanged (bool newWaitingForRestart) {
 		waitingForRestart = newWaitingForRestart;
@@ -129,6 +134,10 @@ public class PlayerController : NetworkBehaviour {
 		}
 
 		CmdAddQueuedMove(move);
+
+		if (waitingForRestart) {
+			CmdStopWaitingForRestart ();
+		}
 	}
 
 	[Command]

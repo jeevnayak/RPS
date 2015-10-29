@@ -99,10 +99,12 @@ public class GameController : MonoBehaviour {
 		}
 		
 		if (localPlayer.GetWaitingForRestart()) {
-			waitingForRestartText.gameObject.SetActive(true);
-			loseModel.SetActive(false);
-			winModel.SetActive(false);
-			restartButton.gameObject.SetActive(false);
+			if (localPlayer.GetHp() == 0 || remotePlayer.GetHp() == 0) {
+				waitingForRestartText.gameObject.SetActive(true);
+				loseModel.SetActive(false);
+				winModel.SetActive(false);
+				restartButton.gameObject.SetActive(false);
+			}
 
 		    if (remotePlayer.GetWaitingForRestart() || remotePlayer.IsAutomated()) {
 				Restart();
