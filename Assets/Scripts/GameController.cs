@@ -141,7 +141,18 @@ public class GameController : MonoBehaviour {
 	}
 
 	public void Restart () {
-		GameObject.Find("Network Manager").GetComponent<NetworkManager>().StopHost();
-		Application.LoadLevel(Application.loadedLevel);
+		loadButton.gameObject.SetActive(true);
+		shootButton.gameObject.SetActive(true);
+		sidestepButton.gameObject.SetActive(true);
+		loseModel.SetActive(false);
+		winModel.SetActive(false);
+		restartButton.gameObject.SetActive(false);
+
+		localPlayer.Reset();
+		if (singlePlayer) {
+			remotePlayer.Reset ();
+		}
+
+		UpdateHpText ();
 	}
 }

@@ -16,6 +16,7 @@ public class PlayerController : NetworkBehaviour {
 	private bool automated;
 	private bool automatedCanSidestep;
 
+	public GameObject morningStarPrefab;
 	public GameObject chargerLeft;
 	public GameObject chargerRight;
 	private GameObject morningStar;
@@ -47,11 +48,20 @@ public class PlayerController : NetworkBehaviour {
 			gameController.SetRemotePlayer(this);
 		}
 
+		initMorningStar ();
+	}
+
+	void initMorningStar () {
+		morningStar = Instantiate(morningStarPrefab, new Vector3 (0, 0, 0), Quaternion.identity) as GameObject;
+		morningStar.transform.parent = gameObject.transform;
+		msAnimator = morningStar.GetComponent<Animator> ();
+		
+		chargerLeft = morningStar.transform.Find ("ChargerLeft").gameObject;
+		chargerRight = morningStar.transform.Find ("ChargerRight").gameObject;
 		chargerLeft.SetActive (loaded);
 		chargerRight.SetActive (loaded);
-
-		morningStar = gameObject.transform.Find ("MorningStar").gameObject;
-		msAnimator = morningStar.GetComponent<Animator> ();
+		
+		explosion = morningStar.transform.Find ("Explosion").gameObject;
 	}
 
 	public bool IsAutomated () {
@@ -120,6 +130,18 @@ public class PlayerController : NetworkBehaviour {
 		gameController.OnQueuedMovesChanged();
 	}
 
+	public void Reset () {
+		hp = 5;
+		loaded = false;
+		automatedCanSidestep = true;
+		queuedMoves.Clear ();
+
+		if (morningStar.gameObject != null) {
+			Destroy (morningStar.gameObject);
+		}
+		initMorningStar ();
+	}
+
 	public void ExecuteQueuedMove (int moveIndex, PlayerController otherPlayerController) {
 		Move myMove = (Move)queuedMoves[moveIndex];
 		Move otherPlayerMove = (Move)otherPlayerController.queuedMoves[moveIndex];
@@ -166,14 +188,14 @@ public class PlayerController : NetworkBehaviour {
 		if (hp <= 0) {
 			explosion.GetComponent<ParticleSystem> ().loop = false;
 			msAnimator.SetTrigger ("triggerDeath");
-			Destroy(gameObject, 1.5f);
+			Destroy(morningStar.gameObject, 1.5f);
 			gameController.GameOver();
 		}
 
 		explosion.SetActive (true);
 		explosion.GetComponent<ParticleSystem> ().maxParticles = explosion.GetComponent<ParticleSystem> ().maxParticles * 5;
 	}
-
+	
 	public void AutomatedStartNextMove () {
 		queuedMoves.Clear();
 		AutomatedFillQueue();
