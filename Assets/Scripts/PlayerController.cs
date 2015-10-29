@@ -158,8 +158,8 @@ public class PlayerController : NetworkBehaviour {
 
 	[Command]
 	void CmdStartNextMove () {
-		waitingForOthers = false;
 		queuedMoves.Clear();
+		waitingForOthers = false;
 	}
 
 	void OnQueuedMovesChanged (SyncListInt.Operation op, int index) {
@@ -171,9 +171,12 @@ public class PlayerController : NetworkBehaviour {
 		loaded = false;
 		automatedCanSidestep = true;
 
-		queuedMoves.Clear ();
-		if (automated) {
-			AutomatedFillQueue();
+
+		if (isLocalPlayer) {
+			CmdStartNextMove();
+		} else if (automated) {
+			queuedMoves.Clear ();
+			AutomatedFillQueue ();
 		}
 
 		if (morningStar.gameObject != null) {
