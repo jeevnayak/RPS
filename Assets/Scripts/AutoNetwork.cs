@@ -74,13 +74,24 @@ public class AutoNetwork : MonoBehaviour {
 	{
 		if (matchListResponse.success && matchListResponse.matches != null)
 		{
+			if (matchListResponse.matches.Count == 0) {
+				CreateMatchRequest create = new CreateMatchRequest();
+				create.name = "Room" + UnityEngine.Random.Range(0, 1000);
+				create.size = 2;
+				create.advertise = true;
+				create.password = "";
 
-			foreach (var match in matchListResponse.matches)
-			{
-				Debug.Log (match.name + ";" + match.networkId);
+				Debug.Log("creating room " + create.name);
+				
+				networkMatch.CreateMatch(create, nm.OnMatchCreate);
+			} else {
+				foreach (var match in matchListResponse.matches)
+				{
+					Debug.Log (match.name + ";" + match.networkId);
+				}
+
+				networkMatch.JoinMatch(matchListResponse.matches[0].networkId, "", nm.OnMatchJoined);
 			}
-
-			networkMatch.JoinMatch(matchListResponse.matches[0].networkId, "", nm.OnMatchJoined);
 		}
 	}
 
