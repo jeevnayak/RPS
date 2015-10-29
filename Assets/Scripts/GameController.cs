@@ -141,6 +141,7 @@ public class GameController : MonoBehaviour {
 	}
 
 	public void Restart () {
+		GameObject.Find("Network Manager").GetComponent<NetworkManager>().StopHost();
 		Application.LoadLevel(Application.loadedLevel);
 	}
 }
