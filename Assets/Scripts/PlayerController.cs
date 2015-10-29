@@ -32,6 +32,9 @@ public class PlayerController : NetworkBehaviour {
 	[SyncVar(hook="OnWaitingForOthersChanged")]
 	private bool waitingForOthers;
 
+	[SyncVar(hook="OnWaitingForRestartChanged")]
+	private bool waitingForRestart;
+
 	private SyncListInt queuedMoves = new SyncListInt();
 
 	void Start () {
@@ -86,6 +89,10 @@ public class PlayerController : NetworkBehaviour {
 	public bool GetWaitingForOthers () {
 		return waitingForOthers;
 	}
+	
+	public bool GetWaitingForRestart () {
+		return waitingForRestart;
+	}
 
 	public bool IsQueueFull () {
 		return queuedMoves.Count == gameController.GetQueueSize();
@@ -99,6 +106,16 @@ public class PlayerController : NetworkBehaviour {
 	void OnWaitingForOthersChanged (bool newWaitingForOthers) {
 		waitingForOthers = newWaitingForOthers;
 		gameController.OnWaitingForOthersChanged();
+	}
+
+	[Command]
+	public void CmdWaitForRestart () {
+		waitingForRestart = true;
+	}
+	
+	void OnWaitingForRestartChanged (bool newWaitingForRestart) {
+		waitingForRestart = newWaitingForRestart;
+		gameController.OnWaitingForRestartChanged();
 	}
 
 	public void AddQueuedMove (Move move) {

@@ -15,6 +15,7 @@ public class GameController : MonoBehaviour {
 	public Button restartButton;
 	public Text consoleText;
 	public Text hpText;
+	public Text waitingForRestartText;
 	public int initQueueSize;
 	public int steadyStateQueueSize;
 	public GameObject player;
@@ -92,6 +93,23 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
+	public void OnWaitingForRestartChanged () {
+		if (localPlayer == null || remotePlayer == null) {
+			return;
+		}
+		
+		if (localPlayer.GetWaitingForRestart()) {
+			waitingForRestartText.gameObject.SetActive(true);
+			loseModel.SetActive(false);
+			winModel.SetActive(false);
+			restartButton.gameObject.SetActive(false);
+
+		    if (remotePlayer.GetWaitingForRestart() || remotePlayer.IsAutomated()) {
+				Restart();
+			}
+		}
+	}
+
 	public void OnQueuedMovesChanged () {
 		if (localPlayer == null || remotePlayer == null) {
 			return;
@@ -163,11 +181,15 @@ public class GameController : MonoBehaviour {
 		restartButton.gameObject.SetActive(true);
 	}
 
-	public void Restart () {
+	public void WaitForRestart () {
+		localPlayer.CmdWaitForRestart();
+	}
+
+	void Restart () {
+		waitingForRestartText.gameObject.SetActive (false);
+
 		localPlayer.Reset();
-		if (singlePlayer) {
-			remotePlayer.Reset ();
-		}
+		remotePlayer.Reset();
 
 		InitButtons ();
 		UpdateHpText ();
