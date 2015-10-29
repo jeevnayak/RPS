@@ -12,6 +12,7 @@ public class GameController : MonoBehaviour {
 	public Button shootButton;
 	public Button sidestepButton;
 	public Button singlePlayerButton;
+	public Button multiplayerButton;
 	public Button restartButton;
 	public Text consoleText;
 	public Text hpText;
@@ -43,6 +44,10 @@ public class GameController : MonoBehaviour {
 		Instantiate(player, new Vector3 (0, 0, 0), Quaternion.identity);
 	}
 
+	public void StartMultiplayer () {
+		gameObject.GetComponent<AutoNetwork> ().StartMultiplayer ();
+	}
+
 	public int GetQueueSize () {
 		return queueSize;
 	}
@@ -59,6 +64,7 @@ public class GameController : MonoBehaviour {
 			remotePlayer.MakeAutomated();
 		}
 		singlePlayerButton.gameObject.SetActive (false);
+		multiplayerButton.gameObject.SetActive (false);
 		InitButtons ();
 		UpdateHpText ();
 	}

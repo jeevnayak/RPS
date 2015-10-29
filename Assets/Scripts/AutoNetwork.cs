@@ -50,6 +50,10 @@ public class AutoNetwork : MonoBehaviour {
 			}
 		}
 	}
+
+	public void StartMultiplayer () {
+		networkMatch.ListMatches(0, 20, "", OnMatchList);
+	}
 	
 	public void OnMatchCreate(CreateMatchResponse matchResponse)
 	{
