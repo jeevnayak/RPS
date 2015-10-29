@@ -17,6 +17,7 @@ public class GameController : MonoBehaviour {
 	public Text consoleText;
 	public Text hpText;
 	public Text waitingForRestartText;
+	public Text waitingForMatchText;
 	public int initQueueSize;
 	public int steadyStateQueueSize;
 	public GameObject player;
@@ -45,6 +46,9 @@ public class GameController : MonoBehaviour {
 	}
 
 	public void StartMultiplayer () {
+		singlePlayerButton.gameObject.SetActive (false);
+		multiplayerButton.gameObject.SetActive (false);
+		waitingForMatchText.gameObject.SetActive (true);
 		gameObject.GetComponent<AutoNetwork> ().StartMultiplayer ();
 	}
 
@@ -65,6 +69,7 @@ public class GameController : MonoBehaviour {
 		}
 		singlePlayerButton.gameObject.SetActive (false);
 		multiplayerButton.gameObject.SetActive (false);
+		waitingForMatchText.gameObject.SetActive (false);
 		InitButtons ();
 		UpdateHpText ();
 	}
