@@ -58,7 +58,7 @@ public class GameController : MonoBehaviour {
 		if (singlePlayer) {
 			remotePlayer.MakeAutomated();
 		}
-		Destroy(singlePlayerButton.gameObject);
+		singlePlayerButton.gameObject.SetActive (false);
 		InitButtons ();
 		UpdateHpText ();
 	}
