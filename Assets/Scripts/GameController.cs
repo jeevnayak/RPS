@@ -24,6 +24,10 @@ public class GameController : MonoBehaviour {
 	private int queueSize;
 	private bool singlePlayer;
 
+	public GameObject winloseLighting;
+	public GameObject winModel;
+	public GameObject loseModel;
+
 	void Start () {
 		queueSize = initQueueSize;
 		singlePlayer = false;
@@ -119,10 +123,15 @@ public class GameController : MonoBehaviour {
 	}
 
 	public void GameOver () {
+		winloseLighting.SetActive(true);
 		if (localPlayer.hp <= 0) {
 			// lose
+			loseModel.SetActive(true);
+			winModel.SetActive(false);
 		} else if (remotePlayer.hp <= 0) {
 			// win
+			loseModel.SetActive(false);
+			winModel.SetActive(true);
 		}
 
 		loadButton.gameObject.SetActive(false);
