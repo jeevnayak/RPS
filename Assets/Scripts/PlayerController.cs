@@ -18,8 +18,8 @@ public class PlayerController : NetworkBehaviour {
 	private bool automatedCanSidestep;
 
 	public GameObject morningStarPrefab;
-	public GameObject chargerLeft;
-	public GameObject chargerRight;
+	//public GameObject chargerLeft;
+	//public GameObject chargerRight;
 	private GameObject morningStar;
 	private Animator msAnimator;
 	public GameObject explosion;
@@ -64,11 +64,14 @@ public class PlayerController : NetworkBehaviour {
 		morningStar = Instantiate(morningStarPrefab, new Vector3 (0, 0, 0), Quaternion.identity) as GameObject;
 		morningStar.transform.parent = gameObject.transform;
 		msAnimator = morningStar.GetComponent<Animator> ();
-		
+
+		/*
 		chargerLeft = morningStar.transform.Find ("ChargerLeft").gameObject;
 		chargerRight = morningStar.transform.Find ("ChargerRight").gameObject;
 		chargerLeft.SetActive (loaded);
 		chargerRight.SetActive (loaded);
+		*/
+		msAnimator.SetBool ("isCharged", loaded);
 		
 		explosion = morningStar.transform.Find ("Explosion").gameObject;
 	}
@@ -216,8 +219,10 @@ public class PlayerController : NetworkBehaviour {
 			audioShoot.Play();
 		}
 
-		chargerLeft.SetActive (loaded);
-		chargerRight.SetActive (loaded);
+		//chargerLeft.SetActive (loaded);
+		//chargerRight.SetActive (loaded);
+		msAnimator.SetBool ("isCharged", loaded);
+
 		if (loaded) {
 			audioLoad.Play ();
 		} else {
