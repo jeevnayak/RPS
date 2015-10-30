@@ -21,6 +21,7 @@ public class GameController : MonoBehaviour {
 	public int initQueueSize;
 	public int steadyStateQueueSize;
 	public GameObject player;
+	public CanvasScaler canvasScaler;
 
 	private PlayerController localPlayer = null;
 	private PlayerController remotePlayer = null;
@@ -32,6 +33,10 @@ public class GameController : MonoBehaviour {
 	public GameObject loseModel;
 
 	void Start () {
+		#if UNITY_IOS || UNITY_ANDROID
+		canvasScaler.scaleFactor = 4;
+		#endif
+		
 		queueSize = initQueueSize;
 		singlePlayer = false;
 

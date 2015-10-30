@@ -19,37 +19,37 @@ public class AutoNetwork : MonoBehaviour {
 		networkMatch = nm.matchMaker;
 	}
 	
-	void OnGUI()
-	{
-		// You would normally not join a match you created yourself but this is possible here for demonstration purposes.
-		if(GUILayout.Button("Create Room"))
-		{
-			CreateMatchRequest create = new CreateMatchRequest();
-			create.name = "NewRoom";
-			create.size = 4;
-			create.advertise = true;
-			create.password = "";
-			
-			networkMatch.CreateMatch(create, nm.OnMatchCreate);
-		}
-		
-		if (GUILayout.Button("List rooms"))
-		{
-			networkMatch.ListMatches(0, 20, "", OnMatchList);
-		}
-		
-		if (matchList.Count > 0)
-		{
-			GUILayout.Label("Current rooms");
-		}
-		foreach (var match in matchList)
-		{
-			if (GUILayout.Button(match.name))
-			{
-				networkMatch.JoinMatch(match.networkId, "", nm.OnMatchJoined);
-			}
-		}
-	}
+//	void OnGUI()
+//	{
+//		// You would normally not join a match you created yourself but this is possible here for demonstration purposes.
+//		if(GUILayout.Button("Create Room"))
+//		{
+//			CreateMatchRequest create = new CreateMatchRequest();
+//			create.name = "NewRoom";
+//			create.size = 4;
+//			create.advertise = true;
+//			create.password = "";
+//			
+//			networkMatch.CreateMatch(create, nm.OnMatchCreate);
+//		}
+//		
+//		if (GUILayout.Button("List rooms"))
+//		{
+//			networkMatch.ListMatches(0, 20, "", OnMatchList);
+//		}
+//		
+//		if (matchList.Count > 0)
+//		{
+//			GUILayout.Label("Current rooms");
+//		}
+//		foreach (var match in matchList)
+//		{
+//			if (GUILayout.Button(match.name))
+//			{
+//				networkMatch.JoinMatch(match.networkId, "", nm.OnMatchJoined);
+//			}
+//		}
+//	}
 
 	public void StartMultiplayer () {
 		networkMatch.ListMatches(0, 20, "", OnMatchList);

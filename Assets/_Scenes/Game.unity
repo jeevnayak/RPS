@@ -1995,7 +1995,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1706215560}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 227461547, guid: 870353891bb340e2b2a9c8707e7419ba, type: 3}
   m_Name: 
@@ -2336,6 +2336,7 @@ MonoBehaviour:
   initQueueSize: 1
   steadyStateQueueSize: 1
   player: {fileID: 173776, guid: 5e34f5235212a4e9590a8710ca9c33f6, type: 2}
+  canvasScaler: {fileID: 543050810}
   winloseLighting: {fileID: 1117806282}
   winModel: {fileID: 368349710}
   loseModel: {fileID: 1860505156}
